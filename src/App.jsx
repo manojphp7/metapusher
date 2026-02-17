@@ -7,7 +7,7 @@ import LeftBar from "./LeftBar";
 import TopBar from "./TopBar";
 import Dashboard from "./Dashboard";
 import Domains from "./Domains";
-import AuthPages from "./AuthPages";
+import { AuthPages } from "./Auth";
 import DomainIntegration from "./DomainIntegration";
 import SendNotification from "./SendNotification";
 import Campaign from "./Campaign";
@@ -18,15 +18,21 @@ import TrafficPackages from "./TrafficPackages";
 import TermConditions from "./TermConditions";
 import SendPaidNotification from "./SendPaidNotification";
 import PaidCampaignDashboard from "./PaidCampaignDashboard";
+import ResetPassword from "./ResetPassword";
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/app">
         <Routes>
           {/* Public Route - Login/Register */}
           <Route path="/login" element={<AuthPages />} />
+          <Route path="/register" element={<AuthPages />} />
+          <Route path="/auth" element={<AuthPages />} />
+          <Route path="/forgot-password" element={<AuthPages />} />
+          <Route path="/verify-email" element={<AuthPages />} />
 
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           {/* Protected Routes - Dashboard & Other Pages */}
           <Route
             path="/*"
@@ -37,6 +43,7 @@ function App() {
                   <div className="flex-grow-1">
                     <TopBar />
                     <Routes>
+                      
                       <Route path="/" element={<Dashboard />} />
                                            
                       <Route path="/domains" element={<Domains />} />                      

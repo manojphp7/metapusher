@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
+import usePageTitle from "./hooks/usePageTitle";
 
 export default function Settings() {
+  usePageTitle("Settings");
   const { token } = useAuth();
 
   const [formData, setFormData] = useState({

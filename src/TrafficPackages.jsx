@@ -3,8 +3,10 @@ import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
 import ContentLoader from "react-content-loader";
+import usePageTitle from "./hooks/usePageTitle";
 
 const TrafficPackages = () => {
+  usePageTitle("Traffic Packages");
   const navigate = useNavigate();
   const { token, user } = useAuth();
   const [loading, setLoading] = useState(true);

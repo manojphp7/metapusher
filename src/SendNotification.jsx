@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL,API_ENDPOINTS } from './constants/appConstants';
+import usePageTitle from "./hooks/usePageTitle";
 
 export default function SendNotification() {
+  usePageTitle("Send Notification");
   const { token,user } = useAuth();
 
   const [campaignName, setCampaignName] = useState("");
@@ -263,7 +265,7 @@ export default function SendNotification() {
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src="https://push.aplu.io/images/chrome.png"
+                      src="https://metapusher.com/cdn/chrome.png"
                       alt="Chrome"
                       className="browser-icon"
                     />

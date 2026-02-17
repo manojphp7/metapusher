@@ -10,7 +10,7 @@ const TopBar = () => {
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       logout();
-      navigate("/login");
+     window.location.href = process.env.PUBLIC_URL;
     }
   };
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
+import usePageTitle from "./hooks/usePageTitle";
 import {
   ComposedChart,
   Line,
@@ -14,6 +15,7 @@ import {
 } from "recharts";
 
 export default function Dashboard() {
+  usePageTitle("Dashboard");
   const { token, user } = useAuth();
 
   const [stats, setStats] = useState({

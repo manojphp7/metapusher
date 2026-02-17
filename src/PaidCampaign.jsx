@@ -3,8 +3,10 @@ import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ContentLoader from "react-content-loader";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
+import usePageTitle from "./hooks/usePageTitle";
 
 export default function PaidCampaign() {
+  usePageTitle("Paid Campaigns");
   const navigate = useNavigate();
   const { token, user } = useAuth();
 

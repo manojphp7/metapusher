@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
+import usePageTitle from "./hooks/usePageTitle";
 
 export default function AddFund() {
+  usePageTitle("Add Fund");
   const { token } = useAuth();
 
   const [currentBalance, setCurrentBalance] = useState(0);

@@ -45,7 +45,7 @@ export default function LeftBar() {
 
   return (
     <aside className="sidebar p-3">
-      <div className="brand mb-4"><img src="/logo.jpg" className="logo"/></div>
+      <div className="brand mb-4"><img src={`${process.env.PUBLIC_URL}/logo.jpg`} className="logo"/></div>
 
       <ul className="nav nav-pills flex-column">
         {/* Dashboard */}

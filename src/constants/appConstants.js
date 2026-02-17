@@ -1,4 +1,5 @@
 export const API_BASE_URL = "https://metapusher.com/api/";
+export const SITE_URL = "https://metapusher.com/";
 export const APP_NAME = "Meta Pusher";
 export const MAX_FILE_SIZE = 5242880; // 5MB
 
@@ -9,9 +10,17 @@ export const USER_ROLES = {
 };
 
 export const API_ENDPOINTS = {
-  Domains: "domains",
   Register: "register",
+  VerifyEmail: 'verify-email', // Naya
+  ResendVerification: 'resend-verification',
+
+  ForgotPassword: "forgot-password",
+  VerifyResetPassword: "verify-forgot-password",
+  ResetPassword: "reset-password",
+  
+  
   Login: "login",
+  Domains: "domains",
   FetchMeta: "fetch-meta",
   SendNotification: "send-notification",
   Campaigns: "campaigns",

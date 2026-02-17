@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
 import ContentLoader from "react-content-loader";
+import usePageTitle from "./hooks/usePageTitle";
 
 const PaidCampaignDashboard = () => {
+  usePageTitle("Paid Dashboard");
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);

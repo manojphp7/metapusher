@@ -1,6 +1,8 @@
 import React from "react";
+import usePageTitle from "./hooks/usePageTitle";
 
 const TermConditions = () => {
+  usePageTitle("Campaign Conditions");
   return (
     <div className="content-area p-4">
       <div className="row">

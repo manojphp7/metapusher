@@ -1,5 +1,6 @@
 {
-  "name": "pushpanel",
+  "name": "MetaPusher",
+  "homepage": "/app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

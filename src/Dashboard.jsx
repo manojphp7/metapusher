@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
 import usePageTitle from "./hooks/usePageTitle";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import {
   ComposedChart,
   Line,
@@ -17,6 +19,7 @@ import {
 export default function Dashboard() {
   usePageTitle("Dashboard");
   const { token, user } = useAuth();
+  const navigate = useNavigate();
 
   const [stats, setStats] = useState({
     totalSubscriber: 0,
@@ -105,16 +108,17 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="content-area p-4">
+    <div className="content-area py-2 px-2 p-md-4">
       <div className="card p-4">
         {/* Header */}
-        <div className="card-header d-flex justify-content-between align-items-center fw-bold bg-white mb-4">
+        <div className="card-header d-flex justify-content-between align-items-center fw-bold bg-white mb-4 px-0 pb-2">
           <span>Dashboard</span>
 
           <select
-            className="form-select w-auto"
+            className="form-select"
             value={selectedDomain}
             onChange={handleDomainChange}
+            style={{ maxWidth: "200px" }}
           >
             <option value="all_domains">All Domains</option>
             {domains.map((domain) => (
@@ -216,7 +220,9 @@ export default function Dashboard() {
         <div className="card border-0 shadow-sm">
           <div className="card-body">
             <h5 className="card-title mb-4">
-              Subscriber Growth (Last 7 Days)
+              {stats.totalSubscriber === 0
+                ? "Get Started"
+                : "Subscriber Growth (Last 7 Days)"}
             </h5>
 
             {loading ? (
@@ -225,15 +231,29 @@ export default function Dashboard() {
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
+            ) : stats.totalSubscriber === 0 ? (
+              <div className="text-center py-5">
+                <i
+                  className="bi bi-bar-chart-line text-muted"
+                  style={{ fontSize: "64px" }}
+                ></i>
+                <h5 className="mt-3 text-muted">No subscribers yet</h5>
+                <p className="text-muted small">
+                  Add the push notification script to your website to start
+                  collecting subscribers.
+                </p>
+                <button
+                  onClick={() => navigate("/domains")}
+                  className="btn btn-primary mt-2"
+                >
+                  <i className="bi bi-code-slash me-2"></i>Add Your Website
+                </button>
+              </div>
             ) : (
               <ResponsiveContainer width="100%" height={400}>
                 <ComposedChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis 
-                    dataKey="date" 
-                    tick={{ fontSize: 12 }} 
-                    stroke="#666" 
-                  />
+                  <XAxis dataKey="date" tick={{ fontSize: 12 }} stroke="#666" />
                   <YAxis
                     yAxisId="left"
                     tick={{ fontSize: 12 }}
@@ -255,10 +275,8 @@ export default function Dashboard() {
                       boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                     }}
                   />
-                  <Legend
-                    wrapperStyle={{ paddingTop: "20px" }}
-                  />
-                  
+                  <Legend wrapperStyle={{ paddingTop: "20px" }} />
+
                   {/* Bar: Daily Count */}
                   <Bar
                     yAxisId="left"
@@ -268,7 +286,7 @@ export default function Dashboard() {
                     barSize={40}
                     radius={[8, 8, 0, 0]}
                   />
-                  
+
                   {/* Line: Total Subscribers */}
                   <Line
                     yAxisId="right"

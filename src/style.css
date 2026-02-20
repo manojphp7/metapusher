@@ -44,8 +44,12 @@ body{
     background: var(--bg-panel);
     border-right: 1px solid var(--border-soft);
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);
-    min-height:100vh;   /* ✅ FULL HEIGHT */
-    flex-shrink:0;      /* ✅ shrink na ho */
+    min-height:100vh;
+    flex-shrink:0;
+    position: sticky;
+    top: 0;
+    transition: transform 0.3s ease;
+    z-index: 1040;
 }
 .sidebar .nav{
   cursor: pointer!important;
@@ -173,11 +177,50 @@ color: var(--accent);
   padding:4px 12px;         /* submenu padding */
   border-radius:6px;
 }
+
+/* ===== Sidebar backdrop (mobile overlay) ===== */
+.sidebar-backdrop {
+  display: none;
+}
+
+/* ===== Sidebar close button (mobile only) ===== */
+.sidebar-close-btn {
+  display: none;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+.sidebar-close-btn:hover {
+  opacity: 1;
+}
+
 /* ===== Topbar ===== */
 .topbar{
   background:var(--bg-panel);
   border-bottom:1px solid var(--border-soft);
   height:56px;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== Hamburger (desktop: hidden, mobile: visible) ===== */
+.hamburger-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.3rem;
+}
+.hamburger-btn:hover {
+  background: var(--accent);
+  color: #fff;
 }
 
 /* ===== Buttons ===== */
@@ -344,7 +387,6 @@ color: var(--accent);
 /*Content Area*/
 .content-area{
   background-color: var(--bg-light);
-  min-height: 100vh;
 }
 
 
@@ -582,4 +624,50 @@ color: var(--accent);
 
 .login-logo{
   width: 320px;
+}
+
+/* ===== RESPONSIVE — Mobile (<992px) ===== */
+@media (max-width: 768px) {
+  /* Sidebar off-screen by default */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-height: 100vh;
+    transform: translateX(-100%);
+    overflow-y: auto;
+  }
+
+  /* Sidebar visible when open */
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Dark backdrop behind sidebar */
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1039;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* Show hamburger on mobile */
+  .hamburger-btn {
+    display: flex !important;
+  }
+
+  /* Show close (×) button inside sidebar */
+  .sidebar-close-btn {
+    display: flex !important;
+    align-items: center;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

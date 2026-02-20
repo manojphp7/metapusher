@@ -57,7 +57,7 @@ const EmailVerification = ({
           <i className="bi bi-envelope-check-fill"></i>
         </div>
         <h2 className="email-title">
-          {isForgot ? "Reset Link Sent" : "Check Your Email"}
+          {isForgot ? "Reset Password Link Sent" : "Check Your Email"}
         </h2>
         <p className="email-subtitle">
           {isForgot
@@ -73,21 +73,7 @@ const EmailVerification = ({
         </p>
       </div>
 
-      <div className="email-instructions">
-        <div className="instruction-item">
-          <div className="step-number">1</div>
-          <span>Open your email inbox</span>
-        </div>
-        <div className="instruction-item">
-          <div className="step-number">2</div>
-          <span>Click the verification link</span>
-        </div>
-        <div className="instruction-item">
-          <div className="step-number">3</div>
-          <span>Your account will be activated</span>
-        </div>
-      </div>
-
+     
       {error && (
         <div className="alert alert-danger custom-alert" role="alert">
           <i className="bi bi-exclamation-circle me-2"></i>

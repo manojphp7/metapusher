@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const TopBar = () => {
+const TopBar = ({ onMenuToggle }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -10,7 +10,7 @@ const TopBar = () => {
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       logout();
-     window.location.href = process.env.PUBLIC_URL;
+      window.location.href = process.env.PUBLIC_URL;
     }
   };
 
@@ -19,7 +19,16 @@ const TopBar = () => {
   }, [user]);
 
   return (
-    <nav className="navbar topbar px-4">
+    <nav className="navbar topbar px-4 d-flex align-items-center">
+      {/* Hamburger — visible only on mobile */}
+      <button
+        className="hamburger-btn"
+        onClick={onMenuToggle}
+        aria-label="Toggle sidebar"
+      >
+        <i className="bi bi-list fs-4"></i>
+      </button>
+
       <div className="ms-auto d-flex align-items-center gap-3">
         <button
           className="btn btn-accent btn-sm"
@@ -34,8 +43,8 @@ const TopBar = () => {
             className="profile-img-wrapper"
             onClick={() => setShowDropdown(!showDropdown)}
           >
-            <div class="bg-light rounded-circle">
-              <i class="bi bi-person-fill fs-5"></i>
+            <div className="bg-light rounded-circle">
+              <i className="bi bi-person-fill fs-5"></i>
             </div>
           </div>
 
@@ -60,14 +69,6 @@ const TopBar = () => {
 
                 <div className="dropdown-divider"></div>
 
-                {/* <button className="dropdown-item" onClick={() => {
-                  setShowDropdown(false);
-                  navigate('/profile');
-                }}>
-                  <i className="bi bi-person me-2"></i>
-                  My Profile
-                </button>
-                 */}
                 <button
                   className="dropdown-item"
                   onClick={() => {

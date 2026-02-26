@@ -14,6 +14,8 @@ export const API_ENDPOINTS = {
   VerifyEmail: 'verify-email', // Naya
   ResendVerification: 'resend-verification',
 
+  GoogleLogin: "google-login",
+
   ForgotPassword: "forgot-password",
   VerifyResetPassword: "verify-forgot-password",
   ResetPassword: "reset-password",

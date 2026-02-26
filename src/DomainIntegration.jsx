@@ -101,7 +101,7 @@ export default function DomainIntegration() {
                 <p className="fw-semibold mb-1">Step 2: Download the Plugin</p>
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <a
-                    href="https://metapusher.com/cdn/MetaPusher.zip"
+                    href="https://metapusher.com/cdn/plugin/MetaPusher.zip"
                     className="btn btn-sm btn-purple"
                     download
                   >

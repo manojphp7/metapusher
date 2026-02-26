@@ -190,18 +190,6 @@
   margin-bottom: 20px;
 }
 
-.forgot-password a {
-  color: #f96700;
-  font-size: 13px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.25s ease;
-}
-
-.forgot-password a:hover {
-  color: #ff7a1a;
-}
-
 .btn-auth {
   background: #f96700;
   color: white;
@@ -222,15 +210,143 @@
   transform: translateY(-1px);
 }
 
-.btn-auth:active:not(:disabled) {
-  transform: translateY(0);
-}
-
 .btn-auth:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
+/* ─── Google Button ─── */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 20px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 4px;
+}
+
+.google-btn:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.google-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.google-icon {
+  flex-shrink: 0;
+}
+
+/* ─── Divider ─── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Mobile Modal ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobile-modal {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  animation: slideUp 0.25s ease;
+}
+
+.mobile-modal .modal-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.modal-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #f96700, #ff7a1a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 4px 12px rgba(249, 103, 0, 0.3);
+}
+
+.modal-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px;
+}
+
+.modal-header p {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.modal-header p strong {
+  color: #f96700;
+}
+
+/* ─── Footer ─── */
 .auth-footer {
   text-align: center;
   margin-top: 24px;
@@ -306,7 +422,7 @@
   width: 100%;
 }
 
-/* Email Verification Sent Screen */
+/* ─── Email Verification ─── */
 .email-sent-header {
   text-align: center;
   margin-bottom: 32px;
@@ -351,42 +467,6 @@
   line-height: 1.5;
   margin: 0;
   padding: 0 20px;
-}
-
-.email-instructions {
-  background: #f5f6f8;
-  border-radius: 16px;
-  padding: 24px 20px;
-  margin-bottom: 24px;
-}
-
-.instruction-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  color: #1f2937;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.instruction-item:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.step-number {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f96700, #ff7a1a);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(249, 103, 0, 0.25);
 }
 
 .email-footer {
@@ -447,6 +527,10 @@
 
 @media (max-width: 480px) {
   .auth-card {
+    padding: 28px 24px;
+  }
+
+  .mobile-modal {
     padding: 28px 24px;
   }
 

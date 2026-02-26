@@ -123,7 +123,7 @@ const TrafficPackages = () => {
                       <i className="bi bi-bar-chart-fill text-accent me-2"></i>{" "}
                       Min. Clicks: {item.min_clicks}
                     </p>
-                    <button className="btn btn-sm btn-success d-block mx-auto">
+                    <button className="btn btn-sm btn-success d-block mx-auto" onClick={() => navigate('/paid-campaigns')}>
                       Continue
                     </button>
                   </div>

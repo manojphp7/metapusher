@@ -276,10 +276,7 @@ export default function Domains() {
           </div>
         </div>
 
-        <AddDomainModal show={showModal} onClose={() =>{
-          fetchDomains()
-          setShowModal(false)
-        } } />
+        <AddDomainModal show={showModal} onClose={() => setShowModal(false)} onSubmitted={fetchDomains}/>
       </div>
     </>
   );

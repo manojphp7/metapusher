@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL,API_ENDPOINTS } from './constants/appConstants';
 
-export default function AddDomainModal({ show, onClose }) {
+export default function AddDomainModal({ show, onClose,onSubmitted }) {
   const { token } = useAuth();
   const [domain, setDomain] = useState("");
   const [error, setError] = useState("");
@@ -80,6 +80,7 @@ export default function AddDomainModal({ show, onClose }) {
 
       if (response.ok) {
         setDomain("");
+        onSubmitted()
         onClose();
       } else {
         setError(result.message || "Failed to add domain");

@@ -17,8 +17,8 @@ export default function LeftBar({ isOpen, onClose }) {
     }
 
     if (
-      location.pathname === "/send-notification" ||
-      location.pathname === "/campaigns" ||
+      // location.pathname === "/send-notification" ||
+      // location.pathname === "/campaigns" ||
       location.pathname === "/paid-dashboard" ||
       location.pathname === "/paid-campaigns" ||
       location.pathname === "/send-paid-notification" ||
@@ -32,8 +32,8 @@ export default function LeftBar({ isOpen, onClose }) {
     }
 
     if (
-      location.pathname !== "/send-notification" &&
-      location.pathname !== "/campaigns" &&
+      // location.pathname !== "/send-notification" &&
+      // location.pathname !== "/campaigns" &&
       location.pathname !== "/paid-dashboard" &&
       location.pathname !== "/paid-campaigns" &&
       location.pathname !== "/send-paid-notification" &&

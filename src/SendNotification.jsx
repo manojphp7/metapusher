@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
 import usePageTitle from "./hooks/usePageTitle";
@@ -16,6 +16,10 @@ export default function SendNotification() {
   const [timing, setTiming] = useState("instant");
   const [scheduledAt, setScheduledAt] = useState("");
   const [scheduleError, setScheduleError] = useState("");
+
+  const [domainsList, setDomainsList] = useState([]);
+  const [selectedDomains, setSelectedDomains] = useState([]);
+  const [loadingDomains, setLoadingDomains] = useState(false);
 
   const [loadingMeta, setLoadingMeta] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -62,6 +66,39 @@ export default function SendNotification() {
     }
   };
 
+  const fetchDomains = async () => {
+    setLoadingDomains(true);
+    try {
+      const res = await fetch(
+        `${API_BASE_URL}${API_ENDPOINTS.Domains}?user_key=${user.public_key}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+      const json = await res.json();
+      setDomainsList(json?.data || []);
+    } catch (err) {
+      console.error("Failed to fetch domains", err);
+    } finally {
+      setLoadingDomains(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDomains();
+  }, []);
+
+  const handleDomainToggle = (domain) => {
+    setSelectedDomains((prev) =>
+      prev.includes(domain)
+        ? prev.filter((d) => d !== domain)
+        : [...prev, domain]
+    );
+  };
+
   // 🔥 Submit notification
   const handleSubmit = async (e) => {
     if (timing === "schedule" && !scheduledAt) {
@@ -74,7 +111,7 @@ export default function SendNotification() {
 
     const payload = {
       user_key: user?.public_key,
-      domains: "https://stylishname.co.in",
+      domains: selectedDomains.join(","),
       campaignName,
       landingUrl,
       title,
@@ -121,7 +158,60 @@ export default function SendNotification() {
             <div className="card">
               <div className="card-body">
                 <h5 className="fw-bold mb-4">Send Notification</h5>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Select Domains <span className="text-danger">*</span>
+                  </label>
 
+                  {loadingDomains ? (
+                    <div className="text-muted small">Loading domains...</div>
+                  ) : domainsList.length === 0 ? (
+                    <div className="text-muted small">No domains found.</div>
+                  ) : (
+                    <div className="row g-2">
+                      {domainsList.map((domain, index) => (
+                        <div className="col-6" key={index}>
+                          <div
+                            className={`border rounded px-3 py-2 d-flex align-items-center gap-2 ${
+                              selectedDomains.includes(domain.domain_name)
+                                ? "border-purple bg-light"
+                                : ""
+                            }`}
+                            style={{ cursor: "pointer" }}
+                            onClick={() =>
+                              handleDomainToggle(domain.domain_name)
+                            }
+                          >
+                            <input
+                              type="checkbox"
+                              className="form-check-input mt-0"
+                              checked={selectedDomains.includes(
+                                domain.domain_name
+                              )}
+                              onChange={() =>
+                                handleDomainToggle(domain.domain_name)
+                              }
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                            <span
+                              className="small text-truncate"
+                              title={domain.domain_name}
+                            >
+                              {domain.domain_name}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {selectedDomains.length > 0 && (
+                    <div className="text-muted small mt-2">
+                      ✅ Selected: <strong>{selectedDomains.length}</strong>{" "}
+                      domain(s)
+                    </div>
+                  )}
+                </div>
                 {/* Campaign Name */}
                 <div className="mb-3">
                   <label className="form-label fw-semibold">
@@ -148,7 +238,7 @@ export default function SendNotification() {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="https://example.com"
+                    placeholder="https://example.com/page"
                     value={landingUrl}
                     onChange={(e) => setLandingUrl(e.target.value)}
                     required
@@ -312,7 +402,14 @@ export default function SendNotification() {
                         <div className="text-muted small mt-1">
                           📅 Scheduled for:{" "}
                           <strong>
-                            {new Date(scheduledAt).toLocaleString()}
+                            {new Date(scheduledAt).toLocaleString("en-IN", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })}
                           </strong>
                         </div>
                       )}

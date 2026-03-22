@@ -2,7 +2,7 @@ export const API_BASE_URL = "https://metapusher.com/api/";
 export const SITE_URL = "https://metapusher.com/";
 export const APP_NAME = "Meta Pusher";
 export const MAX_FILE_SIZE = 5242880; // 5MB
-export const MAINTENANCE_MODE = true;
+export const MAINTENANCE_MODE = false;
 
 export const USER_ROLES = {
   ADMIN: "admin",

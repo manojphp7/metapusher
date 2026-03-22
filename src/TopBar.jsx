@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { MAINTENANCE_MODE } from "./constants/appConstants";
 
 const TopBar = ({ onMenuToggle }) => {
   const { user, logout } = useAuth();
@@ -19,6 +20,7 @@ const TopBar = ({ onMenuToggle }) => {
   }, [user]);
 
   return (
+    <>
     <nav className="navbar topbar px-4 d-flex align-items-center">
       {/* Hamburger — visible only on mobile */}
       <button
@@ -95,6 +97,20 @@ const TopBar = ({ onMenuToggle }) => {
         </div>
       </div>
     </nav>
+
+    {MAINTENANCE_MODE && (
+      <div style={{
+        background: '#dc2626',
+        color: 'white',
+        textAlign: 'center',
+        padding: '8px 16px',
+        fontSize: '13px',
+        fontWeight: '500'
+      }}>
+        🔧 Notification feature is under maintenance for an hour.
+      </div>
+    )}
+    </>
   );
 };
 

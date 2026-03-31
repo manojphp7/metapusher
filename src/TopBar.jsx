@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { MAINTENANCE_MODE } from "./constants/appConstants";
+import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
 
 const TopBar = ({ onMenuToggle }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [maintenanceMode, setMaintenanceMode] = useState(false); // ✅
+
+  // ✅ App load hone par fetch karo
+  useEffect(() => {
+    fetch(`${API_BASE_URL}${API_ENDPOINTS.ConfigSettings}/get?key=maintenance_mode&value=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMaintenanceMode(data.maintenance_mode);
+      })
+      .catch(() => {
+        setMaintenanceMode(false);
+      });
+  }, []);
+
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -98,18 +112,18 @@ const TopBar = ({ onMenuToggle }) => {
       </div>
     </nav>
 
-    {MAINTENANCE_MODE && (
-      <div style={{
-        background: '#dc2626',
-        color: 'white',
-        textAlign: 'center',
-        padding: '8px 16px',
-        fontSize: '13px',
-        fontWeight: '500'
-      }}>
-        🔧 Notification feature is under maintenance for an hour.
-      </div>
-    )}
+    {maintenanceMode && (
+        <div style={{
+          background: '#dc2626',
+          color: 'white',
+          textAlign: 'center',
+          padding: '8px 16px',
+          fontSize: '13px',
+          fontWeight: '500'
+        }}>
+          🔧 Bulk Notification feature is under maintenance for an hour.
+        </div>
+      )}
     </>
   );
 };

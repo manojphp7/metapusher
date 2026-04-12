@@ -1,26 +1,14 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL, API_ENDPOINTS } from "./constants/appConstants";
+
+import { useGeneral } from "./context/GeneralContext";
 
 const TopBar = ({ onMenuToggle }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-  const [maintenanceMode, setMaintenanceMode] = useState(false); // ✅
-
-  // ✅ App load hone par fetch karo
-  useEffect(() => {
-    fetch(`${API_BASE_URL}${API_ENDPOINTS.ConfigSettings}/get?key=maintenance_mode&value=1`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMaintenanceMode(data.maintenance_mode);
-      })
-      .catch(() => {
-        setMaintenanceMode(false);
-      });
-  }, []);
-
+  const { maintenanceMode } = useGeneral(); // context se lo
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
@@ -29,98 +17,96 @@ const TopBar = ({ onMenuToggle }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <>
-    <nav className="navbar topbar px-4 d-flex align-items-center">
-      {/* Hamburger — visible only on mobile */}
-      <button
-        className="hamburger-btn"
-        onClick={onMenuToggle}
-        aria-label="Toggle sidebar"
-      >
-        <i className="bi bi-list fs-4"></i>
-      </button>
-
-      <div className="ms-auto d-flex align-items-center gap-3">
+      <nav className="navbar topbar px-4 d-flex align-items-center">
+        {/* Hamburger — visible only on mobile */}
         <button
-          className="btn btn-accent btn-sm"
-          onClick={() => navigate("/domains")}
+          className="hamburger-btn"
+          onClick={onMenuToggle}
+          aria-label="Toggle sidebar"
         >
-          + Domains
+          <i className="bi bi-list fs-4"></i>
         </button>
 
-        {/* Profile Dropdown */}
-        <div className="position-relative">
-          <div
-            className="profile-img-wrapper"
-            onClick={() => setShowDropdown(!showDropdown)}
+        <div className="ms-auto d-flex align-items-center gap-3">
+          <button
+            className="btn btn-accent btn-sm"
+            onClick={() => navigate("/domains")}
           >
-            <div className="bg-light rounded-circle">
-              <i className="bi bi-person-fill fs-5"></i>
-            </div>
-          </div>
+            + Domains
+          </button>
 
-          {showDropdown && (
-            <>
-              {/* Backdrop to close dropdown */}
-              <div
-                className="dropdown-backdrop"
-                onClick={() => setShowDropdown(false)}
-              />
-
-              {/* Dropdown Menu */}
-              <div className="profile-dropdown">
-                <div className="dropdown-header">
-                  <div className="fw-bold text-white">
-                    {user?.name || "User"}
-                  </div>
-                  <div className="text-white-muted small">
-                    {user?.email || "user@mail.com"}
-                  </div>
-                </div>
-
-                <div className="dropdown-divider"></div>
-
-                <button
-                  className="dropdown-item"
-                  onClick={() => {
-                    setShowDropdown(false);
-                    navigate("/settings");
-                  }}
-                >
-                  <i className="bi bi-gear me-2"></i>
-                  Settings
-                </button>
-
-                <div className="dropdown-divider"></div>
-
-                <button
-                  className="dropdown-item text-danger"
-                  onClick={handleLogout}
-                >
-                  <i className="bi bi-box-arrow-right me-2"></i>
-                  Logout
-                </button>
+          {/* Profile Dropdown */}
+          <div className="position-relative">
+            <div
+              className="profile-img-wrapper"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              <div className="bg-light rounded-circle">
+                <i className="bi bi-person-fill fs-5"></i>
               </div>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
+            </div>
 
-    {maintenanceMode && (
-        <div style={{
-          background: '#dc2626',
-          color: 'white',
-          textAlign: 'center',
-          padding: '8px 16px',
-          fontSize: '13px',
-          fontWeight: '500'
-        }}>
+            {showDropdown && (
+              <>
+                {/* Backdrop to close dropdown */}
+                <div
+                  className="dropdown-backdrop"
+                  onClick={() => setShowDropdown(false)}
+                />
+
+                {/* Dropdown Menu */}
+                <div className="profile-dropdown">
+                  <div className="dropdown-header">
+                    <div className="fw-bold text-white">
+                      {user?.name || "User"}
+                    </div>
+                    <div className="text-white-muted small">
+                      {user?.email || "user@mail.com"}
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider"></div>
+
+                  <button
+                    className="dropdown-item"
+                    onClick={() => {
+                      setShowDropdown(false);
+                      navigate("/settings");
+                    }}
+                  >
+                    <i className="bi bi-gear me-2"></i>
+                    Settings
+                  </button>
+
+                  <div className="dropdown-divider"></div>
+
+                  <button
+                    className="dropdown-item text-danger"
+                    onClick={handleLogout}
+                  >
+                    <i className="bi bi-box-arrow-right me-2"></i>
+                    Logout
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {maintenanceMode && (
+        <div
+          style={{
+            background: "#dc2626",
+            color: "white",
+            textAlign: "center",
+            padding: "8px 16px",
+            fontSize: "13px",
+            fontWeight: "500",
+          }}
+        >
           🔧 Bulk Notification feature is under maintenance for an hour.
         </div>
       )}

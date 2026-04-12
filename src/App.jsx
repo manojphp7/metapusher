@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { GeneralProvider } from "./context/GeneralContext";
 import ProtectedRoute from "./ProtectedRoute";
 
 import LeftBar from "./LeftBar";
@@ -39,6 +40,7 @@ function AppLayout({ children }) {
 
 function App() {
   return (
+    <GeneralProvider>
     <AuthProvider>
       <Router basename="/app">
         <Routes>
@@ -80,6 +82,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
+    </GeneralProvider>
   );
 }
 
